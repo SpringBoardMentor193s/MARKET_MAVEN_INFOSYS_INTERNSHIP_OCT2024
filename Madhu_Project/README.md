@@ -35,8 +35,8 @@ This repository contains a machine learning project for analyzing and predicting
 
 1. Clone this repository:
    
-   git clone https://github.com/madhukommu602/MARKET_MAVEN_INFOSYS_INTERNSHIP.git
-cd MARKET_MAVEN_INFOSYS_INTERNSHIP/Madhu_Project
+   git clone (https://github.com/SpringBoardMentor193s/MARKET_MAVEN_INFOSYS_INTERNSHIP_OCT2024/Madhu_Project
+cd MARKET_MAVEN_INFOSYS_INTERNSHIP_OCT2024/Madhu_Project
 2. Install the required dependencies:
 
    pip install -r requirements.txt
@@ -70,5 +70,5 @@ cd MARKET_MAVEN_INFOSYS_INTERNSHIP/Madhu_Project
 ## Project Insights
 
 This project offers actionable insights for supermarkets to optimize their sales strategies and boost profitability. The predictive model and visualizations assist in understanding sales trends and profit influencers.
-License
+##License
 This project is licensed under the MIT License.
