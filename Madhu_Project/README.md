@@ -30,12 +30,13 @@ This repository contains a machine learning project for analyzing and predicting
 
 1. **`Final_supermartdata.csv`**: The dataset used for training and analysis.
 2. **`Model_train.py`**: The main Python script for data preprocessing, training the model, and deploying the Streamlit interface.
+3.  **`Exploratory_data_analysis.ipynb`**: Exploratory Data Analysis.
 
 ## Setup Instructions
 
 1. Clone this repository:
    
-   git clone (https://github.com/SpringBoardMentor193s/MARKET_MAVEN_INFOSYS_INTERNSHIP_OCT2024/Madhu_Project
+   git clone https://github.com/SpringBoardMentor193s/MARKET_MAVEN_INFOSYS_INTERNSHIP_OCT2024
 cd MARKET_MAVEN_INFOSYS_INTERNSHIP_OCT2024/Madhu_Project
 2. Install the required dependencies:
 
@@ -70,5 +71,6 @@ cd MARKET_MAVEN_INFOSYS_INTERNSHIP_OCT2024/Madhu_Project
 ## Project Insights
 
 This project offers actionable insights for supermarkets to optimize their sales strategies and boost profitability. The predictive model and visualizations assist in understanding sales trends and profit influencers.
-##License
+
+License
 This project is licensed under the MIT License.
