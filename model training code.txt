@@ -1,0 +1,66 @@
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Step 1: Load the data
+df = pd.read_csv('your_data.csv')
+
+# Step 2: Convert Date to standard format
+# If any invalid date is found, it will be converted to NaT (Not a Time)
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
+
+# Step 3: Handle missing values
+# Impute missing numerical values with column mean, and drop rows with categorical NaNs if any
+df.fillna(df.mean(), inplace=True)  # For numerical columns
+df.dropna(subset=['Branch', 'City', 'Customer type', 'Gender', 'Product line', 'Payment'], inplace=True)  # For categorical columns
+
+# Step 4: Encode categorical variables
+df = pd.get_dummies(df, columns=['Branch', 'City', 'Customer type', 'Gender', 'Product line', 'Payment'], drop_first=True)
+
+# Step 5: Fix data types for numerical columns
+df['Unit price'] = pd.to_numeric(df['Unit price'], errors='coerce')
+df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
+
+# Step 6: Create new derived columns (e.g., Profit)
+# Make sure 'Total' and 'cogs' are valid columns and calculate Profit
+if 'Total' in df.columns and 'cogs' in df.columns:
+    df['Profit'] = df['Total'] - df['cogs']
+else:
+    raise ValueError("The columns 'Total' and 'cogs' must be present in the dataset.")
+
+# Step 7: Remove duplicates based on 'Invoice ID'
+df.drop_duplicates(subset='Invoice ID', inplace=True)
+
+# Step 8: Normalize/Scale numerical columns (if needed for ML models)
+scaler = MinMaxScaler()
+df[['Unit price', 'Quantity', 'Total']] = scaler.fit_transform(df[['Unit price', 'Quantity', 'Total']])
+
+# Step 9: Check the preprocessed data
+print(df.head())
+
+# Now, let's prepare for model training:
+
+# Separate features (X) and target (y)
+# Assuming 'Profit' is the target variable, and all other columns are features
+X = df.drop(columns=['Profit', 'Invoice ID'])  # Drop 'Profit' and 'Invoice ID' from features
+y = df['Profit']  # Target is the 'Profit' column
+
+# Step 10: Train-test split (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 11: Train a model (using Linear Regression here as an example)
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Step 12: Make predictions
+y_pred = model.predict(X_test)
+
+# Step 13: Evaluate the model (e.g., using Mean Squared Error)
+mse = mean_squared_error(y_test, y_pred)
+print(f"Mean Squared Error: {mse}")
+
+# You can also check the coefficients and intercept for Linear Regression
+print(f"Coefficients: {model.coef_}")
+print(f"Intercept: {model.intercept_}")

@@ -1,0 +1,31 @@
+import pandas as pd
+
+# Example DataFrame load
+df = pd.read_csv('your_data.csv')
+
+# Step 1: Convert Date to standard format
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
+
+# Step 2: Handle missing values (impute or drop)
+df.fillna(df.mean(), inplace=True)
+
+# Step 3: Encode categorical variables (if needed)
+df = pd.get_dummies(df, columns=['Branch', 'City', 'Customer type', 'Gender', 'Product line', 'Payment'], drop_first=True)
+
+# Step 4: Fix data types
+df['Unit price'] = pd.to_numeric(df['Unit price'], errors='coerce')
+df['Quantity'] = pd.to_numeric(df['Quantity'], errors='coerce')
+
+# Step 5: Create new derived columns like Profit
+df['Profit'] = df['Total'] - df['cogs']
+
+# Step 6: Remove duplicates
+df.drop_duplicates(subset='Invoice ID', inplace=True)
+
+# Step 7: Normalize/Scale numerical columns (if needed for ML models)
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+df[['Unit price', 'Quantity', 'Total']] = scaler.fit_transform(df[['Unit price', 'Quantity', 'Total']])
+
+# Step 8: Check the preprocessed data
+print(df.head())

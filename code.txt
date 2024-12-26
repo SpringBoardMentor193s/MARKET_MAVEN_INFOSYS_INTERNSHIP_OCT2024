@@ -1,0 +1,35 @@
+import pandas as pd
+from prophet import Prophet
+import matplotlib.pyplot as plt
+
+# Load the dataset
+file_path = "data set.csv"
+data = pd.read_csv(file_path)
+
+# Prepare the data
+sales_data = data[["Date", "Total"]].copy()
+sales_data["Date"] = pd.to_datetime(sales_data["Date"], errors="coerce")
+sales_data = sales_data.groupby("Date").sum().reset_index()
+sales_data = sales_data.rename(columns={"Date": "ds", "Total": "y"})
+
+# Initialize the Prophet model
+model = Prophet()
+model.fit(sales_data)
+
+# Create future dates for predictions (e.g., next 30 days)
+future_dates = model.make_future_dataframe(periods=30)
+forecast = model.predict(future_dates)
+
+# Plot the forecast
+fig = model.plot(forecast)
+plt.title("Sales Forecast")
+plt.xlabel("Date")
+plt.ylabel("Total Sales")
+plt.show()
+
+# Optional: Plot components of the forecast
+fig2 = model.plot_components(forecast)
+plt.show()
+
+# Save the forecasted data
+forecast.to_csv("sales_forecast.csv", index=False)
