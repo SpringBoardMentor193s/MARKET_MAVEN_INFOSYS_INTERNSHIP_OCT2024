@@ -46,6 +46,8 @@ jupyter notebook Pavani_MarketMaven.ipynb
 - Execute the notebook cells to process the dataset and generate predictions.
 - The predictions will be saved as `predictions.csv` in the project directory.
 
+## Documentation 
+[Project Report: Market Maven by Pavani](https://docs.google.com/document/d/1bovqjxMSBHXdgD0vxoS77PcCAc8USiu0A4de4V8HOVw/edit?usp=sharing)
 
 ## Usage
 
